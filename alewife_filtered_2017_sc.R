@@ -1,3 +1,46 @@
+<<<<<<< HEAD
+library("tidyverse")
+
+alewife17<- read_csv("~/RM11/alewife_data/alewife_tagging_17.csv")
+
+
+#filter data by 2017
+
+alewife.17.md <- alewife17[c(5425:6925),]
+
+
+#Fill in missing values
+
+#table of sx categories: 
+alewife.17.md %>%
+  + count(sx)
+
+
+#change ? to NA in sx column: 
+alewife17.md$sx[alewife17.md$sx=="?"] <- "NA"
+
+#change - to NA in sx column: 
+
+alewife17.md$sx[alewife17.md$sx=="-"] <-"NA"
+
+
+#change na to NA in sx column: 
+alewife.17.md$sx[alewife.17.md$sx=="na"] <-"NA"
+
+#change F to f: 
+
+alewife.17.md$sx[alewife.17.md$sx=="F"] <-"f"
+
+# Scatterplot of Forklength versus Weight of Alewives grouped by sex
+# I couldn't figure out how to remove NA from the graph. 
+
+ggplot(alewife.17.md, aes(x=w, y=fl, color=sx), position="jitter")+
+  + geom_point (size= 1) + ggtitle("Fork length versus Weight of Alewives")+
+  + ylab("Weight")+
+  + xlab("Fork Length")
+
+
+=======
 library("tidyverse")
 
 alewife17<- read_csv("~/RM11/alewife_data/alewife_tagging_17.csv")
@@ -49,3 +92,4 @@ ggplot(alewife17.md, aes(x=w, y=fl, color=sx), position="jitter")+
   + xlab("Fork Length")
 
 
+>>>>>>> 63fa9752532572b10259f4e59625e09dc3923057
