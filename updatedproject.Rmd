@@ -12,7 +12,20 @@ knitr::opts_chunk$set(echo = TRUE)
 <<<<<<< HEAD
 library("tidyverse")
 
-alewife17<- read_csv("~/RM11/alewife_data/alewife_tagging_17.csv")
+```{r}
+
+alewife17 <- read_csv("alewife13_17.csv", col_type= "iiiiciiciiicc")
+
+alewife17 <- read.csv("alewife13_17.csv")
+View(alewife17)
+names(alewife17)
+```
+
+```{r}
+alewife17.df <- filter(alewife17, 
+                       y == 2017)
+```
+
 
 
 #filter data by 2017
@@ -22,9 +35,23 @@ alewife.17.md <- alewife17[c(5425:6925),]
 
 #Fill in missing values
 
-#table of sx categories: 
-alewife.17.md %>%
-  + count(sx)
+Create a table of sex categories:
+
+```{r}
+
+alewife17.df %>%
+  count(sx)
+
+```
+
+```{r}
+aw.df <- mutate(alewife17.df, 
+                sex = toupper(str_trim(sx)), 
+                sex = ifelse(sex %in% c("-", "?", "NA"), "U", sex))
+# check
+with(aw.df, table(sex, sx))
+```
+
 
 
 #change ? to NA in sx column: 
@@ -98,7 +125,7 @@ alewife17.md$sx[alewife17.md$sx=="F"] <-"f"
 # I couldn't figure out how to remove NA from the graph. 
 
 ggplot(alewife17.md, aes(x=w, y=fl, color=sx), position="jitter")+
-  + geom_point (size= 1) + ggtitle("Fork length versus Weight of Alewives")+
-  + ylab("Weight")+
-  + xlab("Fork Length")
+geom_point (size= 1) + ggtitle("Fork length versus Weight of Alewives")+
+ylab("Weight")+
+xlab("Fork Length")
   
