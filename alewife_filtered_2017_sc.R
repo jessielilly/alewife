@@ -49,5 +49,3 @@ ggplot(alewife17.md, aes(x=w, y=fl, color=sx), position="jitter")+
   + xlab("Fork Length")
 
 
-#Jill Test
-
