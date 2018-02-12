@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <<<<<<< HEAD
 
-#Background: 
+# **Background:** 
 
 Alewife, Alosa pseudoharengus (A. Wilson, 1811) is an anadromous species that is found along the Eastern coast of North America, migrating as far north as Newfoundland (Bigelow and Schroeder 1953). Alewife live to 10 years of age and begin spawning at the age of 3. Alewife can spawn up to 5 times throughout its life. Spawning begins in April or May, with the run reaching a peak in early June (DFO 2007). Alewife spawn upriver in stillwater, spending 13-14 days in the spawning ground before returning to sea (DFO,2007; Andrews 2014). 
 
@@ -26,7 +26,7 @@ In a previous study it was noted that the passage of an Alewife over Missasquash
 
 
 
-#References
+#**References**
 
 Andrews, S.N. 2014. Fishway Efficiency and Passage Behavior of Alewife in Three        Fishways on Tantramar Marsh Near Amherst, Nova Scotia. Thesis.
 Bigelow, H.., and Schroeder, W.C. 1953. Fishes of the Gulf of Maine. Fish. Bull. Fish  Wildl. Serv. 53. Available from http://www.gma.org/fogm/Microgadus_tomcod.htm.
@@ -36,13 +36,17 @@ Task, S.., and Fisher, J.. 1977. Performance of Arctic Grayling in a twenty-foot
 
 
 
-#Questions
+#**Questions**
 
 Since it appears that larger fish are more successful than smaller fish at completing migrations over fishways, the objective of this analysis will be to: 
-1.	Determine if the larger fish are more likely to be females over males? 
+1.	Determine alewife migrate through the system by size class?
+2.  Determine whether males and females migrate at different times?
+3.  Determine whether certain size classes spend more time in the system than others? 
+4   Determine whether different sexes spend different amounts of time in the system?
+5.  Determine if the larger fish are more likely to be females over males? 
 
 
-#Variables: 
+#**Variables:** 
 fl= forklength
 tl=taillength
 sx=sex
@@ -59,12 +63,8 @@ cblc: Ahmerst river tidal gate
 ms: Missassguash tidal gate 
 
 
-
-
-
-library("tidyverse")
-
 ```{r}
+library("tidyverse")
 
 alewife17 <- read_csv("alewife13_17.csv", col_type= "iiiiciiciiicc")
 
@@ -76,7 +76,7 @@ names(alewife17)
 #filter only 2017 data 
 
 ```{r}
-alewife17.df <- filter(alewife17, yr==2017)
+alewife17.df <- filter(alewife17, y==2017)
 ```
 
 
@@ -94,7 +94,7 @@ alewife17.df %>%
 ```{r}
 aw.df <- mutate(alewife17.df, 
                 sex = toupper(str_trim(sx)), 
-                sex = ifelse(sex %in% c("-", "?", "NA"), "U", sex))
+                sex = ifelse(sex %in% c("- ", "?", "NA"), "U", sex))
 # check
 with(aw.df, table(sex, sx))
 ```
@@ -109,7 +109,7 @@ aw.df$sx <- NULL
 
 #Change na to a missing value in w
 ```{r}
-aw.df <- mutate(aw.df,w = ifelse(w %in% c(na), "NA"))
+aw.df <- mutate(aw.df,w = ifelse(w %in% c("na"), "NA"))
 ```
 
 # Below is a scatterplot displaying the relationship between forklength versus weight of Alewives grouped by sex. I am not sure why the numbers on the x axis are not displaying correctly. 
