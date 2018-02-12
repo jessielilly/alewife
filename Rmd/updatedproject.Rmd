@@ -94,7 +94,7 @@ alewife17.df %>%
 ```{r}
 aw.df <- mutate(alewife17.df, 
                 sex = toupper(str_trim(sx)), 
-                sex = ifelse(sex %in% c("- ", "?", "NA"), "U", sex))
+                sex = ifelse(sex %in% c("-","?", "NA"), "U", sex))
 # check
 with(aw.df, table(sex, sx))
 ```
@@ -104,12 +104,12 @@ with(aw.df, table(sex, sx))
 
 ```{r}
 aw.df$sx <- NULL
-
 ```
 
 #Change na to a missing value in w
 ```{r}
-aw.df <- mutate(aw.df,w = ifelse(w %in% c("na"), "NA"))
+aw.df <- mutate(aw.df,w = ifelse(w %in% c("na"), "NA", w))
+View(aw.df)
 ```
 
 # Below is a scatterplot displaying the relationship between forklength versus weight of Alewives grouped by sex. I am not sure why the numbers on the x axis are not displaying correctly. 
@@ -118,6 +118,7 @@ aw.df <- mutate(aw.df,w = ifelse(w %in% c("na"), "NA"))
 ggplot(data= aw.df,mapping= aes(x=w,y=fl,color=sex),position="jitter")+
   geom_point()+
   ggtitle("Fork length versus Weight for Alewives")+
+  scale_x_discrete(breaks = seq(0, 200, 25))+
   xlab("Weight(g)")+
   ylab("Fork length(fl)")
 ```
