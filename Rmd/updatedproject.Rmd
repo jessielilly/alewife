@@ -1,0 +1,177 @@
+---
+title: "Alewife Migration"
+authors: "Danni Harper, Jillian Hunt, Jessie Lilly"
+date: "February 12, 2018"
+output: html_document
+
+
+
+---
+```{r}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<<<<<<< HEAD
+
+#Background: 
+
+Alewife, Alosa pseudoharengus (A. Wilson, 1811) is an anadromous species that is found along the Eastern coast of North America, migrating as far north as Newfoundland (Bigelow and Schroeder 1953). Alewife live to 10 years of age and begin spawning at the age of 3. Alewife can spawn up to 5 times throughout its life. Spawning begins in April or May, with the run reaching a peak in early June (DFO 2007). Alewife spawn upriver in stillwater, spending 13-14 days in the spawning ground before returning to sea (DFO,2007; Andrews 2014). 
+
+The results of our study were collected from Amherst fishway and Missaquash fishway between April- June (2013-2017). The Amherst fishway is located just outside of Amherst, Nova Scotia and the Missaquash fishway is located on the border between Nova Scotia and New Brunswick, both fishways are Denil style fishways (Andrews 2014). For this study, Alewives were obtained using fyke nets and were transferred to a holding pen where measurements were taken, which included: fork length, total length, weight and sex. A small incision was made anterior to the anal fin and Pit tags were inserted into the abdominal cavity(Andrews 2014). Reader boxes were installed directly below each fishway to monitor PIT tagged Alewife passage frequency during their spawning run.
+
+In a previous study it was noted that the passage of an Alewife over Missasquash and Ahmerst fish ways was positively correlated with the size of the fish (Andrews 2014). Larger fish were also more likely to overcome the barriers than smaller fish (Andrews 2014). It was also noted that Alewives often struggled to make it past the fish passages on their first attempt (Andrews 2014). This is hypothesized to occur because some fish don’t have enough stored energy to overcome the barrier (Task and Fisher 1977). This suggests that these fishways may prevent Alewife from having successful spawning runs in the Ahmerst and Missaquash rivers. 
+
+
+
+#References
+
+Andrews, S.N. 2014. Fishway Efficiency and Passage Behavior of Alewife in Three        Fishways on Tantramar Marsh Near Amherst, Nova Scotia. Thesis.
+Bigelow, H.., and Schroeder, W.C. 1953. Fishes of the Gulf of Maine. Fish. Bull. Fish  Wildl. Serv. 53. Available from http://www.gma.org/fogm/Microgadus_tomcod.htm.
+DFO. (2007). Assessment of Gasperaue River Alewife. DFO Can. Sci. Advis. Sec. Sci.     Advis. Rep. 2007/030.
+Task, S.., and Fisher, J.. 1977. Performance of Arctic Grayling in a twenty-foot       section model “A” Alaska Steeppass fish ladder. Final Rep. US Army Corps Eng. Alsk.    Div. Anchorage.
+
+
+
+
+#Questions
+
+Since it appears that larger fish are more successful than smaller fish at completing migrations over fishways, the objective of this analysis will be to: 
+1.	Determine if the larger fish are more likely to be females over males? 
+
+
+#Variables: 
+fl= forklength
+tl=taillength
+sx=sex
+tl/fl= tail length to fork length ratio
+w=weight
+p= pit tag
+h= hour
+min= minute
+d=day
+m= month
+y=year 
+site= 
+cblc: Ahmerst river tidal gate
+ms: Missassguash tidal gate 
+
+
+
+
+
+library("tidyverse")
+
+```{r}
+
+alewife17 <- read_csv("alewife13_17.csv", col_type= "iiiiciiciiicc")
+
+alewife17 <- read.csv("alewife13_17.csv")
+View(alewife17)
+names(alewife17)
+```
+
+#filter only 2017 data 
+
+```{r}
+alewife17.df <- filter(alewife17, yr==2017)
+```
+
+
+
+#Fill in missing values
+
+
+```{r}
+
+alewife17.df %>%
+  count(sx)
+
+```
+
+```{r}
+aw.df <- mutate(alewife17.df, 
+                sex = toupper(str_trim(sx)), 
+                sex = ifelse(sex %in% c("-", "?", "NA"), "U", sex))
+# check
+with(aw.df, table(sex, sx))
+```
+
+
+#remove sx column from aw.df
+
+```{r}
+aw.df$sx <- NULL
+
+```
+
+#Change na to a missing value in w
+```{r}
+aw.df <- mutate(aw.df,w = ifelse(w %in% c(na), "NA"))
+```
+
+# Below is a scatterplot displaying the relationship between forklength versus weight of Alewives grouped by sex. I am not sure why the numbers on the x axis are not displaying correctly. 
+ 
+```{r}
+ggplot(data= aw.df,mapping= aes(x=w,y=fl,color=sex),position="jitter")+
+  geom_point()+
+  ggtitle("Fork length versus Weight for Alewives")+
+  xlab("Weight(g)")+
+  ylab("Fork length(fl)")
+```
+
+
+
+=======
+library("tidyverse")
+
+alewife17<- read_csv("~/RM11/alewife_data/alewife_tagging_17.csv")
+
+
+#filter data by 2017
+
+alewife.17.md <- alewife17[c(5425:6925),]
+
+
+#Fill in missing values
+
+#table of sx categories: 
+alewife.17.md %>%
+  + count(sx)
+
+#how to find rows with f and na
+alewife.17.md %>%
+  + filter(str_detect(sx,"F$"))
+
+
+alewife.17.md %>%
+  + filter(str_detect(sx,"na$"))
+
+#change all capitals to lower cases: 
+alewife.17.md <- mutate (alewife.17.md,funs(tolower))
+
+#change ? to NA in sx column: 
+alewife17.md$sx[alewife17.md$sx=="?"] <- "NA"
+
+#change - to NA in sx column: 
+
+alewife17.md$sx[alewife17.md$sx=="-"] <-"NA"
+
+
+#change na to NA in sx column: 
+alewife17.md$sx[alewife17.md$sx=="na"] <-"NA"
+
+#change F to f: 
+
+alewife17.md$sx[alewife17.md$sx=="F"] <-"f"
+
+# Scatterplot of Forklength versus Weight of Alewives grouped by sex
+# I couldn't figure out how to remove NA from the graph. 
+
+ggplot(alewife17.md, aes(x=w, y=fl, color=sx), position="jitter")+
+geom_point (size= 1) + ggtitle("Fork length versus Weight of Alewives")+
+ylab("Weight")+
+xlab("Fork Length")
+  
