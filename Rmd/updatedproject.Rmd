@@ -123,6 +123,17 @@ ggplot(data= aw.df,mapping= aes(x=w,y=fl,color=sex),position="jitter")+
   ylab("Fork length(fl)")
 ```
 
+```{r}
+library(lubridate)
+
+aw.df %>%
+  mutate(month=month(m,label=TRUE)) %>%
+  ggplot(aes(x=m))+
+  geom_bar()+
+  ggtitle("Month vs. Passage of Alewife Through Ahmerst and Missaquash Fishway")+
+  xlab("Month")+
+  ylab("Count")
+```
 
 
 =======
