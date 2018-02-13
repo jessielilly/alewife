@@ -134,7 +134,17 @@ aw.df %>%
   xlab("Month")+
   ylab("Count")
 ```
+```{r}
+library(lubridate)
 
+aw.df %>%
+  select(y, m , d) %>%
+  mutate(dates = make_date(y, m, d))
+
+ggplot(aw.df) +
+  geom_bar(aes(dates, fill = tl))
+
+```
 
 =======
 library("tidyverse")
