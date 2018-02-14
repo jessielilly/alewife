@@ -18,11 +18,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # **Background:** 
 
-Alewife, Alosa pseudoharengus (A. Wilson, 1811) is an anadromous species that is found along the Eastern coast of North America, migrating as far north as Newfoundland (Bigelow and Schroeder 1953). Alewife live to 10 years of age and begin spawning at the age of 3. Alewife can spawn up to 5 times throughout its life. Spawning begins in April or May, with the run reaching a peak in early June (DFO 2007). Alewife spawn upriver in stillwater, spending 13-14 days in the spawning ground before returning to sea (DFO,2007; Andrews 2014). 
+Alewife, *Alosa pseudoharengus* (A. Wilson, 1811) is an anadromous species that is found along the Eastern coast of North America, migrating as far north as Newfoundland (Bigelow and Schroeder 1953). Alewife live to 10 years of age and begin spawning at the age of 3. Alewife can spawn up to 5 times throughout its life. Spawning begins in April or May, with the run reaching a peak in early June (DFO 2007). Alewife spawn upriver in stillwater, spending 13-14 days in the spawning ground before returning to sea (DFO,2007; Andrews 2014). 
 
-The results of our study were collected from Amherst fishway and Missaquash fishway between April- June (2013-2017). The Amherst fishway is located just outside of Amherst, Nova Scotia and the Missaquash fishway is located on the border between Nova Scotia and New Brunswick, both fishways are Denil style fishways (Andrews 2014). For this study, Alewives were obtained using fyke nets and were transferred to a holding pen where measurements were taken, which included: fork length, total length, weight and sex. A small incision was made anterior to the anal fin and Pit tags were inserted into the abdominal cavity(Andrews 2014). Reader boxes were installed directly below each fishway to monitor PIT tagged Alewife passage frequency during their spawning run.
+The data for our study were collected from Amherst fishway and Missaquash fishway between April- June (2013-2017). The Amherst fishway is located just outside of Amherst, Nova Scotia and the Missaquash fishway is located on the border between Nova Scotia and New Brunswick, both fishways are Denil style fishways (Andrews 2014). For this study, Alewives were obtained using fyke nets and were transferred to a holding pen where measurements were taken, which included: fork length, total length, weight and sex. A small incision was made anterior to the anal fin and Pit tags were inserted into the abdominal cavity(Andrews 2014). Reader boxes were installed directly below each fishway to monitor PIT tagged Alewife passage frequency during their spawning run.
 
-In a previous study it was noted that the passage of an Alewife over Missasquash and Ahmerst fish ways was positively correlated with the size of the fish (Andrews 2014). Larger fish were also more likely to overcome the barriers than smaller fish (Andrews 2014). It was also noted that Alewives often struggled to make it past the fish passages on their first attempt (Andrews 2014). This is hypothesized to occur because some fish don’t have enough stored energy to overcome the barrier (Task and Fisher 1977). This suggests that these fishways may prevent Alewife from having successful spawning runs in the Ahmerst and Missaquash rivers. 
+In a previous study it was noted that the passage of an Alewife over Missasquash and Ahmerst fish ways was positively correlated with the size of the fish (Andrews 2014). Larger fish were also more likely to overcome the barriers than smaller fish (Andrews 2014). It was also noted that Alewives often struggled to make it past the fish passages on their first attempt (Andrews 2014). This is hypothesized to occur because some fish do not have enough stored energy to overcome the barrier (Task and Fisher 1977). This suggests that these fishways may prevent Alewife from having successful spawning runs in the Ahmerst and Missaquash rivers. 
 
 
 
@@ -39,7 +39,7 @@ Task, S.., and Fisher, J.. 1977. Performance of Arctic Grayling in a twenty-foot
 #**Questions**
 
 Since it appears that larger fish are more successful than smaller fish at completing migrations over fishways, the objective of this analysis will be to: 
-1.	Determine alewife migrate through the system by size class?
+1.	Determine if alewife migrate through the system by size class?
 2.  Determine whether males and females migrate at different times?
 3.  Determine whether certain size classes spend more time in the system than others? 
 4   Determine whether different sexes spend different amounts of time in the system?
@@ -141,6 +141,8 @@ aw.df %>%
   mutate(enter = make_date(y, m, d)) %>%
   ggplot(aw.df) +
   geom_bar(aes(enter, fill = tl))
+#something about binwidth...bin the tl data...
+#can't get mutate to make a new column...
 
 ```
 
