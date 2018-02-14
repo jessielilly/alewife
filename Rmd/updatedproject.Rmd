@@ -69,8 +69,7 @@ library("tidyverse")
 
 alewife17 <- read_csv("alewife13_17.csv", col_type= "iiiiciiciiicc")
 
-alewife17 <- read.csv("alewife13_17.csv")
-View(alewife17)
+alewife17 <- read.csv("alewife13_17.csv", na = c("na", "NA"))
 names(alewife17)
 ```
 
@@ -116,10 +115,9 @@ View(aw.df)
 Below is a scatterplot displaying the relationship between forklength versus weight of Alewives grouped by sex. I am not sure why the numbers on the x axis are not displaying correctly. 
  
 ```{r}
-ggplot(data= aw.df,mapping= aes(x=w,y=fl,color=sex),position="jitter")+
+ggplot(data= aw.df,mapping= aes(x=w,y=fl,colour=sex),position="jitter")+
   geom_point()+
   ggtitle("Fork length versus Weight for Alewives")+
-  scale_x_discrete(breaks = seq(0, 200, 25))+
   xlab("Weight(g)")+
   ylab("Fork length(fl)")
 
@@ -139,11 +137,13 @@ aw.df %>%
 ```
 ```{r}
 
-aw.df %>%
-  select(y, m , d) %>%
+aw.df <- aw.df %>%
   mutate(enter = make_date(y, m, d))
-#something about binwidth...bin the tl data...
-#can't get mutate to make a new column...
+
+ggplot(aw.df, aes(enter))+
+  geom_histogram(aes(fill = sex), binwidth = 1)+
+  xlab("Date")+
+  ylab("Number of Fish")
 
 ```
 
