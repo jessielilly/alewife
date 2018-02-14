@@ -26,7 +26,7 @@ In a previous study it was noted that the passage of an Alewife over Missasquash
 
 
 
-#**References**
+# **References**
 
 Andrews, S.N. 2014. Fishway Efficiency and Passage Behavior of Alewife in Three        Fishways on Tantramar Marsh Near Amherst, Nova Scotia. Thesis.
 Bigelow, H.., and Schroeder, W.C. 1953. Fishes of the Gulf of Maine. Fish. Bull. Fish  Wildl. Serv. 53. Available from http://www.gma.org/fogm/Microgadus_tomcod.htm.
@@ -36,7 +36,7 @@ Task, S.., and Fisher, J.. 1977. Performance of Arctic Grayling in a twenty-foot
 
 
 
-#**Questions**
+# **Questions**
 
 Since it appears that larger fish are more successful than smaller fish at completing migrations over fishways, the objective of this analysis will be to: 
 1.	Determine if alewife migrate through the system by size class?
@@ -46,7 +46,7 @@ Since it appears that larger fish are more successful than smaller fish at compl
 5.  Determine if the larger fish are more likely to be females over males? 
 
 
-#**Variables:** 
+# **Variables:** 
 fl= forklength
 tl=taillength
 sx=sex
@@ -73,7 +73,7 @@ View(alewife17)
 names(alewife17)
 ```
 
-#filter only 2017 data 
+Filter only 2017 data 
 
 ```{r}
 alewife17.df <- filter(alewife17, y==2017)
@@ -81,7 +81,7 @@ alewife17.df <- filter(alewife17, y==2017)
 
 
 
-#Fill in missing values
+Fill in missing values
 
 
 ```{r}
@@ -99,20 +99,20 @@ aw.df <- mutate(alewife17.df,
 with(aw.df, table(sex, sx))
 ```
 
-
-#remove sx column from aw.df
+Remove sx column from aw.df
 
 ```{r}
 aw.df$sx <- NULL
 ```
 
-#Change na to a missing value in w
+Change na to a missing value in w
+
 ```{r}
 aw.df <- mutate(aw.df,w = ifelse(w %in% c("na"), "NA", w))
 View(aw.df)
 ```
 
-# Below is a scatterplot displaying the relationship between forklength versus weight of Alewives grouped by sex. I am not sure why the numbers on the x axis are not displaying correctly. 
+Below is a scatterplot displaying the relationship between forklength versus weight of Alewives grouped by sex. I am not sure why the numbers on the x axis are not displaying correctly. 
  
 ```{r}
 ggplot(data= aw.df,mapping= aes(x=w,y=fl,color=sex),position="jitter")+
