@@ -146,6 +146,12 @@ ggplot(aw.df, aes(enter))+
   ylab("Number of Fish")
 
 ```
+```{r}
+aw.df <- aw.df %>%
+  mutate(length = ntile(tl, 10))
+
+View(aw.df)
+```
 
 =======
 library("tidyverse")
