@@ -122,6 +122,8 @@ ggplot(data= aw.df,mapping= aes(x=w,y=fl,color=sex),position="jitter")+
   scale_x_discrete(breaks = seq(0, 200, 25))+
   xlab("Weight(g)")+
   ylab("Fork length(fl)")
+
+#can't get the x axis to work...
 ```
 
 ```{r}
@@ -139,9 +141,7 @@ aw.df %>%
 
 aw.df %>%
   select(y, m , d) %>%
-  mutate(enter = make_date(y, m, d)) %>%
-  ggplot(aw.df) +
-  geom_bar(aes(enter, fill = tl))
+  mutate(enter = make_date(y, m, d))
 #something about binwidth...bin the tl data...
 #can't get mutate to make a new column...
 
