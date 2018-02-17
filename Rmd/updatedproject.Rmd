@@ -63,11 +63,14 @@ cblc: Ahmerst river tidal gate
 ms: Missassguash tidal gate 
 
 # **Data Tidying**
+col_type= "iiiiciiciiicc" 
+
+parsing failure: pit = double; sx = integer; sp = integer; site = integer...WHY?
 
 ```{r}
 library("tidyverse")
 
-alewife17 <- read_csv("alewife13_17.csv", col_type= "iiiiciiciiicc")
+alewife17 <- read_csv("alewife13_17.csv", cols(fl = col_integer(), tl = col_integer(), TL...FL = col_integer(), w = col_integer(), pit = col_character(), h = col_integer(), min = col_integer(), sx = col_character(), d = col_integer(), m = col_integer(), y = col_integer(), sp = col_character(), site = col_character()), col_names = TRUE)
 
 alewife17 <- read.csv("alewife13_17.csv", na = c("na", "NA"))
 names(alewife17)
