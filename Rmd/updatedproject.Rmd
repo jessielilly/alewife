@@ -39,11 +39,13 @@ Task, S.., and Fisher, J.. 1977. Performance of Arctic Grayling in a twenty-foot
 # **Questions**
 
 Since it appears that larger fish are more successful than smaller fish at completing migrations over fishways, the objective of this analysis will be to: 
+
+1. Is there a relationship between forklength of fish and sex? 
 1.	Determine if alewife migrate through the system by size class?
 2.  Determine whether males and females migrate at different times?
 3.  Determine whether certain size classes spend more time in the system than others? 
 4   Determine whether different sexes spend different amounts of time in the system?
-5.  Determine if the larger fish are more likely to be females over males? 
+
 
 
 # **Variables:** 
