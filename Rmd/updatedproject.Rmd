@@ -63,20 +63,34 @@ cblc: Ahmerst river tidal gate
 ms: Missassguash tidal gate 
 
 # **Data Tidying**
-col_type= "iiiiciiciiicc" 
+# We initially checked the status of each column and noted that pit was read in as an integer.
 
-parsing failure: pit = double; sx = integer; sp = integer; site = integer...WHY?
+
+parsing failure: pit = double; sx = integer; sp = integer; site = integer...WHY? Check the status of each column. 
 
 ```{r}
 library("tidyverse")
 
-alewife17 <- read_csv("alewife13_17.csv", cols(fl = col_integer(), tl = col_integer(), TL...FL = col_integer(), w = col_integer(), pit = col_character(), h = col_integer(), min = col_integer(), sx = col_character(), d = col_integer(), m = col_integer(), y = col_integer(), sp = col_character(), site = col_character()), col_names = TRUE)
+
+sapply(alewife17,class)
 
 alewife17 <- read.csv("alewife13_17.csv", na = c("na", "NA"))
 names(alewife17)
+
+sapply(alewife17,class)
+
+
+
 ```
 
-Filter only 2017 data 
+##We then changed the pit column from numeric to a character vector
+
+```{r}
+
+alewife17$pit <- as.character(alewife17$pit)
+```
+
+##Filter only 2017 data 
 
 ```{r}
 alewife17.df <- filter(alewife17, y==2017)
