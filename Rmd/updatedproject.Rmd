@@ -42,7 +42,7 @@ Since it appears that larger fish are more successful than smaller fish at compl
 
 1. Is there a relationship between forklength of fish and sex? 
 2. Is there a relationship between sex, migration time and size class?
-3. Is there a difference between type of fishway and size of fish? 
+3. Is there a difference between size of fish and tagging location?
 
 
 
@@ -190,6 +190,15 @@ ggplot(data=aw.df.2,mapping=aes(x=sex,y=fl))+
   ylab("Forklength")
 
 
+```
+
+##Graph the relationship between size (fl) and tagging location (site)
+```{r}
+ggplot(data = aw.df) +
+  geom_boxplot(mapping = aes(x = site, y = fl)) +
+  ggtitle("Relationship between Fork Length and Tagging Location") + 
+  ylab("Fork Length") +
+  xlab("Tagging Location")
 ```
 
 =======
