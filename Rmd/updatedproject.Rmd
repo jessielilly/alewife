@@ -170,54 +170,29 @@ aw.df <- aw.df %>%
 View(aw.df)
 ```
 
+
+## Change NA values to U
+
+```{r}
+aw.df.2 <- mutate(aw.df,sex = ifelse(sex %in% c("NA"),"U", sex))
+```
+
+
+
+
+## Graph of the relationship between forklength and sex. 
+
+```{r}
+
+
+
+ggplot(data=aw.df.2,mapping=aes(x=sex,y=fl))+
+  geom_boxplot()+
+  ggtitle("Relationship between Forklength and Sex")+
+  xlab("Sex")+
+  ylab("Forklength")
+
+
+```
+
 =======
-library("tidyverse")
-
-alewife17<- read_csv("~/RM11/alewife_data/alewife_tagging_17.csv")
-
-
-#filter data by 2017
-
-alewife.17.md <- alewife17[c(5425:6925),]
-
-
-#Fill in missing values
-
-#table of sx categories: 
-alewife.17.md %>%
-  + count(sx)
-
-#how to find rows with f and na
-alewife.17.md %>%
-  + filter(str_detect(sx,"F$"))
-
-
-alewife.17.md %>%
-  + filter(str_detect(sx,"na$"))
-
-#change all capitals to lower cases: 
-alewife.17.md <- mutate (alewife.17.md,funs(tolower))
-
-#change ? to NA in sx column: 
-alewife17.md$sx[alewife17.md$sx=="?"] <- "NA"
-
-#change - to NA in sx column: 
-
-alewife17.md$sx[alewife17.md$sx=="-"] <-"NA"
-
-
-#change na to NA in sx column: 
-alewife17.md$sx[alewife17.md$sx=="na"] <-"NA"
-
-#change F to f: 
-
-alewife17.md$sx[alewife17.md$sx=="F"] <-"f"
-
-# Scatterplot of Forklength versus Weight of Alewives grouped by sex
-# I couldn't figure out how to remove NA from the graph. 
-
-ggplot(alewife17.md, aes(x=w, y=fl, color=sx), position="jitter")+
-geom_point (size= 1) + ggtitle("Fork length versus Weight of Alewives")+
-ylab("Weight")+
-xlab("Fork Length")
-  
