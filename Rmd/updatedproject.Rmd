@@ -165,7 +165,7 @@ ggplot(aw.df, aes(enter))+
 ```
 ```{r}
 aw.df <- aw.df %>%
-  mutate(length = ntile(tl, 10))
+  mutate(length = ntile(fl, 10))
 
 View(aw.df)
 ```
