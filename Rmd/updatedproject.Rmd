@@ -42,8 +42,7 @@ Since it appears that larger fish are more successful than smaller fish at compl
 
 1. Is there a relationship between forklength of fish and sex? 
 2. Is there a relationship between sex, migration time and size class?
-3. Is there a relationship between size class and time spent in the system?
-4. Is there a difference between type of fishway and size of fish? 
+3. Is there a difference between type of fishway and size of fish? 
 
 
 
