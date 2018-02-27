@@ -71,9 +71,6 @@ parsing failure: pit = double; sx = integer; sp = integer; site = integer...WHY?
 ```{r}
 library("tidyverse")
 
-
-sapply(alewife17,class)
-
 alewife17 <- read.csv("alewife13_17.csv", na = c("na", "NA"))
 names(alewife17)
 
