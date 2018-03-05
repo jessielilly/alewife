@@ -1,0 +1,169 @@
+---
+title: "Assignment 2"
+author: "Jill Hunt"
+date: '2018-03-04'
+output: html_document
+---
+
+```{r}
+
+## Load Tidyverse
+library(tidyverse) 
+
+```
+
+```{r}
+
+## Set the amount of numbers it will randomly generate
+set.seed = 10000
+
+```
+
+```{r}
+
+## Create function that makes a dataset based on given parameters for n, b0, b1 and sd.err
+
+rand.mod <- function(n = 200, b0 = 2, b1 = 3, sd.err = 1) {
+  predictor <- runif(n) - 0.5
+  response <- b0 + b1 * predictor + rnorm(n, mean = 0, sd = sd.err)
+  return(data.frame(response = response, predictor = predictor))}
+
+```
+
+```{r}
+
+## Use new function "rand.mod" to create dataset with columns of different B1 manipulations. Summary() function narrows down the results to show only the tvalue of the predictor.
+
+n.times <- 1000
+tval.B1 <- matrix(nrow = n.times, ncol = 3, NA)
+for(i in 1:n.times) {
+  mod1 <- lm(response ~ predictor, data = rand.mod(n = 100, b0 = 1, b1 = 0.5, sd.err = 2))
+  tval.B1[i, 1] <- summary(mod1)$coefficients["predictor", "t value"]
+  mod2 <- lm(response ~ predictor, data = rand.mod(n = 100, b0 = 1, b1 = 2, sd.err = 2))
+  tval.B1[i, 2] <- summary(mod2)$coefficients["predictor", "t value"]
+  mod3 <- lm(response ~predictor, data = rand.mod(n = 100, b0 = 1, b1 = 3, sd.err = 2))
+  tval.B1[i, 3] <- summary(mod3)$coefficients["predictor", "t value"]}
+
+```
+
+```{r}
+
+## Put it all into a dataframe and turn dataframe into a long format. Check to make sure "trial" column is factors not intergers
+
+tval.B1 <- data.frame(tval.B1)
+tval.B1 <- gather(tval.B1, value = "tval", key = "trial")
+tval.B1$trial <- factor(tval.B1$trial)
+
+```
+
+```{r}
+
+## Plot with means
+tval.sum.B1 <- group_by(tval.B1, trial) %>% summarize(mn.tval = mean(tval))
+p <- ggplot(aes(tval, group = trial, col = trial), data = tval.B1)
+p + geom_density() + geom_vline(data = tval.sum.B1, aes(xintercept = mn.tval, col = trial))
+
+```
+
+```{r}
+
+## Use new function "rand.mod" to create dataset with columns of different error manipulations. Summary() function narrows down the results to show only the tvalue of the predictor.
+
+n.times <- 1000
+tval.err <- matrix(nrow = n.times, ncol = 3, NA)
+for(i in 1:n.times) {
+mod1 <- lm(response ~ predictor, data = rand.mod(n = 100, b0 = 1, b1 = 1, sd.err = 0.5))
+tval.err[i, 1] <- summary(mod1)$coefficients["predictor", "t value"]
+mod2 <- lm(response ~ predictor, data = rand.mod(n = 100, b0 = 1, b1 = 1, sd.err = 1))
+tval.err[i, 2] <- summary(mod2)$coefficients["predictor", "t value"]
+mod3 <- lm(response ~ predictor, data = rand.mod(n = 100, b0 = 1, b1 = 1, sd.err = 2))
+tval.err[i, 3] <- summary(mod3)$coefficients["predictor", "t value"]}
+
+```
+
+```{r}
+
+## Put it all into a dataframe and turn dataframe into a long format. Check to make sure "trial" column is factors not intergers
+
+tval.err <- data.frame(tval.err)
+tval.err <- gather(tval.err, value = "tvalue", key="trial")
+tval.err$trial <- factor(tval.err$trial)
+
+```
+
+```{r}
+
+## Plot with means
+
+tval.sum.err <- group_by(tval.err, trial) %>% summarize(mn.tval = mean(tvalue))
+p <- ggplot(aes(tvalue, group = trial, col = trial), data = tval.err)
+p + geom_density() + geom_vline(data = tval.sum.err, aes(xintercept = mn.tval, col = trial))
+
+```
+
+```{r}
+
+## Use new function "rand.mod" to create dataset with columns of different sample size manipulations. 
+
+n.times <- 1000
+tval.ss <- matrix(nrow = n.times, ncol = 3, NA)
+for (i in 1:n.times) {
+mod1 <- lm(response ~ predictor, data = rand.mod(n = 100, b0 = 1, b1 = 1, sd.err = 1))
+tval.ss[i, 1] <- summary(mod1)$coefficients["predictor", "t value"]
+mod2 <- lm(response ~ predictor, data = rand.mod(n = 1000, b0 = 1, b1 = 1, sd.err = 1))
+tval.ss[i, 2] <- summary(mod2)$coefficients["predictor", "t value"]
+mod3 <- lm(response ~ predictor, data = rand.mod(n = 10000, b0 = 1, b1 = 1, sd.err = 1))
+tval.ss[i, 3] <- summary(mod3)$coefficients["predictor", "t value"]}
+
+```
+
+```{r}
+
+## Put it all into a dataframe and turn dataframe into a long format. Check to make sure "trial" column is factors not intergers
+
+tval.ss <- data.frame(tval.ss)
+tval.ss <- gather(tval.ss, value = "tvalue", key="trial")
+tval.ss$trial <- factor(tval.ss$trial)
+
+```
+
+```{r}
+
+## Plot with means
+
+tval.sum.ss <- group_by(tval.ss, trial) %>% summarize(mn.tval = mean(tvalue))
+p <- ggplot(aes(tvalue, group = trial, col = trial), data = tval.ss)
+p + geom_density() + geom_vline(data = tval.sum.ss, aes(xintercept = mn.tval, col = trial))
+
+```
+
+```{r}
+
+## Making different models to see how manipulating sample size affects the pvalue
+
+n.times <- 1000
+pval.ss <- matrix(nrow = n.times, ncol = 3, NA)
+for (i in 1:n.times) {
+mod <- lm(response ~ predictor, data = rand.mod(n = 100, b0 = 0, b1 = 0, sd.err = 3))
+pval.ss[i, 1] <- summary(mod)$coefficients["predictor", "Pr(>|t|)"]
+mod1 <- lm(response ~ predictor, data = rand.mod(n = 10, b0 = 0, b1 = 0, sd.err = 3))
+pval.ss[i, 2] <- summary(mod1)$coefficients["predictor", "Pr(>|t|)"]
+mod2 <- lm(response ~ predictor, data = rand.mod(n = 1000, b0 = 0, b1 = 0, sd.err = 3))
+pval.ss[i, 3] <- summary(mod2)$coefficients["predictor", "Pr(>|t|)"]}
+
+pval.ss <- data.frame(pval.ss)
+pval.ss <- gather(pval.ss, value = "pvalue", key = "trial")
+pval.ss$trial <- factor(pval.ss$trial) 
+
+```
+
+```{r}
+
+## Plot with means
+
+pval.sum.ss <- group_by(pval.ss, trial) %>% summarize(mn.pval = mean(pvalue))
+p <- ggplot(aes(pvalue, group = trial, col = trial), data = pval.ss)
+p + geom_density() + geom_vline(data = pval.sum.ss, aes(xintercept = mn.pval, col = trial))
+
+```
+
