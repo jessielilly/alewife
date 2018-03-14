@@ -31,6 +31,12 @@ ggplot(data=aw.df,aes(m))+ geom_histogram()
 aw.df$fish <- 1:nrow(aw.df)
 ```
 
+## Count the Alewife Present in each month. 
+
+```{r}
+data.frame(table(aw.df$m))
+```
+
 ## Use poisson distribution
 
 ```{r}
