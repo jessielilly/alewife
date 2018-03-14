@@ -40,9 +40,23 @@ Task, S.., and Fisher, J.. 1977. Performance of Arctic Grayling in a twenty-foot
 
 Since it appears that larger fish are more successful than smaller fish at completing migrations over fishways, the objective of this analysis will be to: 
 
-1. Is there a relationship between forklength of fish and sex? 
-2. Is there a relationship between sex, migration time and size class?
-3. Is there a difference between type of fishway and size of fish? 
+1. JILL Is there a relationship between forklength of fish and sex? --> have to do a t-test
+  Response variable -> forklength (normally distributed)
+  Predictor variable -> sex
+
+2. Is there a relationship between sex, migration time?
+  Response variable -> migration time
+  Predictor variable -> sex
+  
+  2b) Is there a relationship between sex and size class?
+    Response variable -> size class
+    Predictor variable -> sex
+  
+3. DANNI Is there a difference between size of fish and tagging location?
+  Response variable -> tagging location
+  Predictor variable -> size of fish 
+  
+4. JESSIE Is there a difference between migration time and amount of fish (per month, per location)? -> Normal linear regression
 
 
 
