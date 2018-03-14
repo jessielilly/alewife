@@ -243,29 +243,24 @@ ggplot(data = aw.df) +
 ```{r}
 library(tidyverse)
 
-ggplot(data=aw.df,aes(m))+
+ggplot(data=aw.df,aes(h))+
   geom_histogram()
 
-## Create a column in the data frame where each fish is assigned a number. 
 
-
-
-aw.df$fish <- group_by(aw.df$m) %>% 1:nrow(aw.df)
 ```
 
 
-## Count the Alewife Present in each month. 
+## Count the Alewife Present at each hour
+## The data appears to be skewed to the right. 
 
 ```{r}
-data.frame(table(aw.df$m))
+data.frame(table(aw.df$h))
 ```
 
 ## Fit the model 
 
 ```{r}
-library(tidyverse)
-count <- table(aw.df$m)
-count
+aw.df.2 <- aw.df %>% group_by(h) %>%tally()
 ```
 
 ## Use poisson distribution.
@@ -273,8 +268,8 @@ count
 
 ```{r}
 
-poisson.t.test <- glm(count~m,family="poisson",data=aw.df)
-summary(poisson.t.test)
+p1 <- glm(n~h,family="poisson",data=aw.df.2)
+summary(p1)
 ```
 
 ## Check assumptions
