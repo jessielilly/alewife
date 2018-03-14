@@ -139,6 +139,7 @@ aw.df$sx <- NULL
 Change na to a missing value in w
 
 ```{r}
+library(tidyverse)
 aw.df <- mutate(aw.df,w = ifelse(w %in% c("na"), "NA", w))
 View(aw.df)
 ```
@@ -210,15 +211,52 @@ ggplot(data=aw.df.2,mapping=aes(x=sex,y=fl))+
 ```
 
 =======
-## 1. Is there a relationship between forklength of fish and sex?
-## Response variable is Forklength
-## Predictor variable is Sex 
-## Filter out unknown values in sex category of dataframe 
-## First check to see if fl is normally distributed 
-## Forklength appears to be normally distributed
+## 4. JESSIE Is there a difference between migration time and amount of fish (per month, per location)? 
+
+## I think we should use a poisson t-test as we have 2 months May(5) and June(6). We want to compare whether the density of fish differs between these two months, and both measures are discrete variables. The fish are assumed to be distibuted randomly and independently and samples of equal size were assumed to be taken randomly. 
+
+## Create a histogram to compare abundance. 
 
 ```{r}
-ggplot(data=aw.df,aes(aw.df$fl))+
+library(tidyverse)
+
+ggplot(data=aw.df,aes(m))+
   geom_histogram()
 
-``
+## Create a column in the data frame where each fish is assigned a number. 
+
+
+
+aw.df$fish <- group_by(aw.df$m) %>% 1:nrow(aw.df)
+```
+
+
+## Count the Alewife Present in each month. 
+
+```{r}
+data.frame(table(aw.df$m))
+```
+
+## Fit the model 
+
+```{r}
+library(tidyverse)
+count <- table(aw.df$m)
+count
+```
+
+## Use poisson distribution.
+## I am not sure how to get the count for each month and insert it into the poisson formula. 
+
+```{r}
+
+poisson.t.test <- glm(count~m,family="poisson",data=aw.df)
+summary(poisson.t.test)
+```
+
+## Check assumptions
+
+```{r}
+par(mfrow=c(2,2))
+plot(p1)
+```
