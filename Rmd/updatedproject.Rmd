@@ -40,6 +40,7 @@ Task, S.., and Fisher, J.. 1977. Performance of Arctic Grayling in a twenty-foot
 
 Since it appears that larger fish are more successful than smaller fish at completing migrations over fishways, the objective of this analysis will be to: 
 
+<<<<<<< HEAD
 1. JILL Is there a relationship between forklength of fish and sex? --> have to do a t-test
   Response variable -> forklength (normally distributed)
   Predictor variable -> sex
@@ -57,6 +58,11 @@ Since it appears that larger fish are more successful than smaller fish at compl
   Predictor variable -> size of fish 
   
 4. JESSIE Is there a difference between migration time and amount of fish (per month, per location)? -> Normal linear regression
+=======
+1. Is there a relationship between forklength of fish and sex? 
+2. Is there a relationship between sex, migration time and size class?
+3. Is there a difference between size of fish and tagging location?
+>>>>>>> 9f8b9d8cb83d5c51a47e3732bb8a5572e0cf4ba2
 
 
 
@@ -84,9 +90,6 @@ parsing failure: pit = double; sx = integer; sp = integer; site = integer...WHY?
 
 ```{r}
 library("tidyverse")
-
-
-sapply(alewife17,class)
 
 alewife17 <- read.csv("alewife13_17.csv", na = c("na", "NA"))
 names(alewife17)
@@ -153,7 +156,6 @@ ggplot(data= aw.df,mapping= aes(x=w,y=fl,colour=sex),position="jitter")+
   xlab("Weight(g)")+
   ylab("Fork length(fl)")
 
-#can't get the x axis to work...
 ```
 
 ```{r}
@@ -167,6 +169,8 @@ aw.df %>%
   xlab("Month")+
   ylab("Count")
 ```
+
+Graph showing the number of fish entering the system by date, and bars are separated by sex
 ```{r}
 
 aw.df <- aw.df %>%
@@ -180,9 +184,18 @@ ggplot(aw.df, aes(enter))+
 ```
 ```{r}
 aw.df <- aw.df %>%
-  mutate(length = ntile(tl, 10))
+  mutate(length = ntile(fl, 6))
 
 View(aw.df)
+```
+
+Graph showing the size of fish entering the system, colour is just the binned forklength (kinda redundant...)
+```{r}
+ggplot(aw.df, aes(enter, fl, alpha = 1/10))+
+  geom_point()+
+  ylab("Forklength (mm)")+
+  xlab("Entery Date")+
+  theme(legend.position = 'none')
 ```
 
 
@@ -208,6 +221,15 @@ ggplot(data=aw.df.2,mapping=aes(x=sex,y=fl))+
   ylab("Forklength")
 
 
+```
+
+##Graph the relationship between size (fl) and tagging location (site)
+```{r}
+ggplot(data = aw.df) +
+  geom_boxplot(mapping = aes(x = site, y = fl)) +
+  ggtitle("Relationship between Fork Length and Tagging Location") + 
+  ylab("Fork Length") +
+  xlab("Tagging Location")
 ```
 
 =======
