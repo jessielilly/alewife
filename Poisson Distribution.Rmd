@@ -22,8 +22,8 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 ```{r}
 library(tidyverse)
 
-ggplot(data=aw.df,aes(m))+ geom_histogram()
-         ```
+ggplot(data=aw.df,aes(m))+
+  geom_histogram()
 
 ## Create a column in the data frame where each fish is assigned a number. 
 
@@ -37,11 +37,13 @@ aw.df$fish <- 1:nrow(aw.df)
 data.frame(table(aw.df$m))
 ```
 
+```
+
 ## Use poisson distribution
 
 ```{r}
 
-poisson.t.test <- glm(fish~m,family="poisson",data=aw.df)
+poisson.t.test <- glm(aw.df$m~ m,family="poisson",data=aw.df)
 summary(p1)
 ```
 
