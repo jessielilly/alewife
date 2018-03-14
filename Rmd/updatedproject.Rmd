@@ -196,14 +196,15 @@ ggplot(data=aw.df.2,mapping=aes(x=sex,y=fl))+
 ```
 
 =======
-## 1. Is there a relationship between forklength of fish and sex? ?
-
-## First check to see if TL is normally distributed 
-## Taillength appears to be normally distributed
+## 1. Is there a relationship between forklength of fish and sex?
+## Response variable is Forklength
+## Predictor variable is Sex 
+## Filter out unknown values in sex category of dataframe 
+## First check to see if fl is normally distributed 
+## Forklength appears to be normally distributed
 
 ```{r}
 ggplot(data=aw.df,aes(aw.df$fl))+
   geom_histogram()
 
 ``
-
