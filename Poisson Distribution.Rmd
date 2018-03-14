@@ -28,7 +28,8 @@ ggplot(data=aw.df,aes(m))+
 ## Create a column in the data frame where each fish is assigned a number. 
 
 ```{r}
-aw.df$fish <- 1:nrow(aw.df)
+
+aw.df$fish <- group_by(aw.df$m) %>% 1:nrow(aw.df)
 ```
 
 ## Count the Alewife Present in each month. 
@@ -37,14 +38,21 @@ aw.df$fish <- 1:nrow(aw.df)
 data.frame(table(aw.df$m))
 ```
 
+## Fit the model 
+
+```{r}
+library(tidyverse)
+count <- 
 ```
+
+
 
 ## Use poisson distribution
 
 ```{r}
 
-poisson.t.test <- glm(aw.df$m~ m,family="poisson",data=aw.df)
-summary(p1)
+poisson.t.test <- glm(count~m,family="poisson",data=aw.df)
+summary(poisson.t.test)
 ```
 
 ## Check assumptions
