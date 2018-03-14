@@ -196,3 +196,14 @@ ggplot(data=aw.df.2,mapping=aes(x=sex,y=fl))+
 ```
 
 =======
+## 1. Is there a relationship between forklength of fish and sex? ?
+
+## First check to see if TL is normally distributed 
+## Taillength appears to be normally distributed
+
+```{r}
+ggplot(data=aw.df,aes(aw.df$fl))+
+  geom_histogram()
+
+``
+
