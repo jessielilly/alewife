@@ -1,0 +1,49 @@
+---
+title: "Linear Regression"
+author: "Jessie Lilly"
+date: "March 14, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+## 4. JESSIE Is there a difference between migration time and amount of fish (per month, per location)? 
+
+## I think we should use a poisson t-test as we have 2 months May(5) and June(6). We want to compare whether the density of fish differs between these two months, and both measures are discrete variables. The fish are assumed to be distibuted randomly and independently and samples of equal size were assumed to be taken randomly. 
+
+## Create a histogram to compare abundance. 
+
+```{r}
+library(tidyverse)
+
+ggplot(data=aw.df,aes(m))+ geom_histogram()
+         ```
+
+## Create a column in the data frame where each fish is assigned a number. 
+
+```{r}
+aw.df$fish <- 1:nrow(aw.df)
+```
+
+## Use poisson distribution
+
+```{r}
+
+poisson.t.test <- glm(fish~m,family="poisson",data=aw.df)
+summary(p1)
+```
+
+## Check assumptions
+
+```{r}
+par(mfrow=c(2,2))
+plot(p1)
+```
+
+
