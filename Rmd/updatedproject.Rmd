@@ -57,7 +57,8 @@ Since it appears that larger fish are more successful than smaller fish at compl
   Response variable -> tagging location
   Predictor variable -> size of fish 
   
-4. JESSIE Is there a difference between migration time and amount of fish (per month, per location)? -> Normal linear regression
+4. JESSIE Is there a difference between migration time and amount of fish (per day, per location)? -> Normal linear regression
+Is there a difference between size of fork length and month?
 =======
 1. Is there a relationship between forklength of fish and sex? 
 2. Is there a relationship between sex, migration time and size class?
