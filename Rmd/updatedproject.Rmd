@@ -271,9 +271,9 @@ plot(mod.site)
 Model seems to fit pretty well, the values are evenly distributed around zero and Q-Q plot follows the line with a bit of spread at the top and bottom
 
 =======
-## 4. JESSIE Is there a difference between migration time and amount of fish (per month, per location)? 
+## 4. JESSIE Is there a difference between migration time and amount of fish observed?
 
-## I think we should use a poisson t-test as we have 2 months May(5) and June(6). We want to compare whether the density of fish differs between these two months, and both measures are discrete variables. The fish are assumed to be distibuted randomly and independently and samples of equal size were assumed to be taken randomly. 
+## I think we should use a poisson distribution as we have different times of day in which fish were captured and a posssion test is used for count data. We want to compare whether the abundance of Alewife differs between different hours of the day, and this measure is a discrete variable. The fish are assumed to be distibuted randomly and independently and samples of equal size were assumed to be taken randomly. 
 
 ## Create a histogram to compare abundance. 
 
@@ -293,13 +293,17 @@ data.frame(table(aw.df$h))
 ```
 
 ## Fit the model 
+## I created a data frame that contains the frequncy of alweife captured at each hour. The frequency needs to be used in the poisson glm. 
 
 ```{r}
 aw.df.2 <- aw.df %>% group_by(h) %>%tally()
 ```
 
 ## Use poisson distribution.
-## I am not sure how to get the count for each month and insert it into the poisson formula. 
+## I am not sure how to interpret the coefficients.  
+## There will be a 3.1% increase in the number of fish caught for each increase in hour throughout the day? 
+## There appears to be a statistically significant difference between different hours of the day and the number of Alewife captured? 
+.
 
 ```{r}
 
@@ -308,6 +312,9 @@ summary(p1)
 ```
 
 ## Check assumptions
+## Residuals versus fitted values: The indendence of error assumption can't be followed, as some values appear to influence one another. Do you need this in a poission model because the variance is equal to the mean? 
+## The residuals are normally distributed. 
+## I forget how to interpret the first plot. 
 
 ```{r}
 par(mfrow=c(2,2))
