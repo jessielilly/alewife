@@ -314,7 +314,7 @@ summary(p1)
 ## Check assumptions
 ## Residuals versus fitted values: The indendence of error assumption can't be followed, as some values appear to influence one another. Do you need this in a poission model because the variance is equal to the mean? 
 ## The residuals are normally distributed. 
-## I forget how to interpret the first plot. 
+. 
 
 ```{r}
 par(mfrow=c(2,2))
