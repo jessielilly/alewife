@@ -233,6 +233,77 @@ ggplot(data = aw.df) +
   xlab("Tagging Location")
 ```
 
+OUR RESEARCH QUESTIONS 
+
+1. Is there a relationship between forklength of fish and sex?
+  Response variable -> forklength (normally distributed)
+  Predictor variable -> sex
+  
+  Using a Welsh two-sample t-test -> I know this isn't the ideal test to perform, but it will determine if the two groups (male and female) have the same mean of forklength. If the t-test indicates that the mean is not the same, we can determine that the forklengths differ among sex
+  
+Create two datasets from aw.df; one with just female forklenghs and the other with just male forklengths
+```{r}
+newmodel.df <- select(aw.df, fl, sex)
+female.df <- filter(newmodel.df, sex == "F")
+male.df <- filter(newmodel.df, sex == "M")
+female.df$sex = NULL
+male.df$sex = NULL
+colnames(female.df)[1] = "female.fl"
+colnames(male.df)[1] = "male.fl"
+```
+
+We now want to create a new dataset by combining the forklength columns of male.df and female.df, but there's an issue: male.df has 763 values and female.df has 730 values. So we first need to add 33 values of NA to the female dataset -- I know there's a "one-line code" way to do this but I couldn't figure it out, so I did 33 seperate lines of code to add them all individually.
+
+```{r}
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+female.df <- rbind(female.df, "731" = c(NA, NA))
+```
+
+Create the new dataset with the columns male.fl and female.fl
+
+```{r}
+male.df$female.fl <- female.df$female.fl
+View(male.df)
+```
+
+Now we can run the t.test
+
+```{r}
+t.test(female.fl, male.fl)
+```
+
+
 3.Is there a difference between size of fish and tagging location?
   Response variable -> forklength of fish
   Predictor variable -> site
