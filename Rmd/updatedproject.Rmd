@@ -294,7 +294,8 @@ Create the new dataset with the columns male.fl and female.fl
 
 ```{r}
 male.df$female.fl <- female.df$female.fl
-View(male.df)
+female.fl <- male.df$female.fl
+male.fl <- male.df$male.fl
 ```
 
 Now we can run the t.test
