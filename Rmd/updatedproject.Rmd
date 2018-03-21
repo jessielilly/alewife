@@ -40,8 +40,8 @@ Task, S.., and Fisher, J.. 1977. Performance of Arctic Grayling in a twenty-foot
 
 Since it appears that larger fish are more successful than smaller fish at completing migrations over fishways, the objective of this analysis will be to: 
 
-<<<<<<< HEAD
-1. JILL Is there a relationship between forklength of fish and sex? --> have to do a t-test
+
+1. Is there a relationship between forklength of fish and sex? --> have to do a t-test
   Response variable -> forklength (normally distributed)
   Predictor variable -> sex
 
@@ -53,13 +53,14 @@ Since it appears that larger fish are more successful than smaller fish at compl
     Response variable -> size class
     Predictor variable -> sex
   
-3. DANNI Is there a difference between size of fish and tagging location?
+3. Is there a difference between size of fish and tagging location?
   Response variable -> tagging location
   Predictor variable -> size of fish 
   
-4. JESSIE Is there a difference between migration time and amount of fish (per day, per location)? -> Normal linear regression
+4. Is there a difference between migration time and amount of fish (per day, per location)? -> Normal linear regression
 Is there a difference between size of fork length and month?
-=======
+
+
 1. Is there a relationship between forklength of fish and sex? 
 2. Is there a relationship between sex, migration time and size class?
 3. Is there a difference between size of fish and tagging location?
@@ -199,8 +200,7 @@ ggplot(aw.df, aes(enter, fl, alpha = 1/10))+
   theme(legend.position = 'none')
 ```
 
-
-## Change NA values to U
+Change NA values to U
 
 ```{r}
 aw.df.2 <- mutate(aw.df,sex = ifelse(sex %in% c("NA"),"U", sex))
@@ -208,8 +208,7 @@ aw.df.2 <- mutate(aw.df,sex = ifelse(sex %in% c("NA"),"U", sex))
 
 
 
-
-## Graph of the relationship between forklength and sex. 
+Graph of the relationship between forklength and sex. 
 
 ```{r}
 
@@ -224,7 +223,7 @@ ggplot(data=aw.df.2,mapping=aes(x=sex,y=fl))+
 
 ```
 
-##Graph the relationship between size (fl) and tagging location (site)
+Graph the relationship between size (fl) and tagging location (site)
 ```{r}
 ggplot(data = aw.df) +
   geom_boxplot(mapping = aes(x = site, y = fl)) +
@@ -233,9 +232,9 @@ ggplot(data = aw.df) +
   xlab("Tagging Location")
 ```
 
-OUR RESEARCH QUESTIONS 
+# **OUR RESEARCH QUESTIONS** 
 
-1. Is there a relationship between forklength of fish and sex?
+**1. Is there a relationship between forklength of fish and sex?**
   Response variable -> forklength (normally distributed)
   Predictor variable -> sex
   
@@ -305,8 +304,8 @@ t.test(female.fl, male.fl)
 ```
 
 
-3.Is there a difference between size of fish and tagging location?
-  Response variable -> forklength of fish
+**3.Is there a difference between size of fish and tagging location?**
+  Response variable -> forklength of fish (normally distributed)
   Predictor variable -> site
  
 Creating a data frame with just the information I will need for the model (not necessary but easier for me to see)
@@ -342,12 +341,12 @@ plot(mod.site)
 ```
 Model seems to fit pretty well, the values are evenly distributed around zero and Q-Q plot follows the line with a bit of spread at the top and bottom
 
-=======
-## 4. JESSIE Is there a difference between migration time and amount of fish observed?
 
-## I think we should use a poisson distribution as we have different times of day in which fish were captured and a posssion test is used for count data. We want to compare whether the abundance of Alewife differs between different hours of the day, and this measure is a discrete variable. The fish are assumed to be distibuted randomly and independently and samples of equal size were assumed to be taken randomly. 
+**4. JESSIE Is there a difference between migration time and amount of fish observed?**
 
-## Create a histogram to compare abundance. 
+I think we should use a poisson distribution as we have different times of day in which fish were captured and a posssion test is used for count data. We want to compare whether the abundance of Alewife differs between different hours of the day, and this measure is a discrete variable. The fish are assumed to be distibuted randomly and independently and samples of equal size were assumed to be taken randomly. 
+
+Create a histogram to compare abundance. 
 
 ```{r}
 ggplot(data=aw.df,aes(h))+
@@ -357,25 +356,29 @@ ggplot(data=aw.df,aes(h))+
 ```
 
 
-## Count the Alewife Present at each hour
-## The data appears to be skewed to the right. 
+Count the Alewife Present at each hour
+
+The data appears to be skewed to the right. 
 
 ```{r}
 data.frame(table(aw.df$h))
 ```
 
-## Fit the model 
-## I created a data frame that contains the frequncy of alweife captured at each hour. The frequency needs to be used in the poisson glm. 
+Fit the model 
+
+I created a data frame that contains the frequncy of alweife captured at each hour. The frequency needs to be used in the poisson glm. 
 
 ```{r}
 aw.df.2 <- aw.df %>% group_by(h) %>%tally()
 ```
 
-## Use poisson distribution.
-## I am not sure how to interpret the coefficients.  
-## There will be a 3.1% increase in the number of fish caught for each increase in hour throughout the day? 
-## There appears to be a statistically significant difference between different hours of the day and the number of Alewife captured? 
-.
+Use poisson distribution.
+
+I am not sure how to interpret the coefficients.  
+
+There will be a 3.1% increase in the number of fish caught for each increase in hour throughout the day? 
+
+There appears to be a statistically significant difference between different hours of the day and the number of Alewife captured? 
 
 ```{r}
 
@@ -383,10 +386,11 @@ p1 <- glm(n~h,family="poisson",data=aw.df.2)
 summary(p1)
 ```
 
-## Check assumptions
-## Residuals versus fitted values: The indendence of error assumption can't be followed, as some values appear to influence one another. Do you need this in a poission model because the variance is equal to the mean? 
-## The residuals are normally distributed. 
-. 
+Check assumptions
+
+Residuals versus fitted values: The indendence of error assumption can't be followed, as some values appear to influence one another. Do you need this in a poission model because the variance is equal to the mean? 
+
+The residuals are normally distributed. 
 
 ```{r}
 par(mfrow=c(2,2))
