@@ -235,6 +235,7 @@ ggplot(data = aw.df) +
 # **OUR RESEARCH QUESTIONS** 
 
 **1. Is there a relationship between forklength of fish and sex?**
+  
   Response variable -> forklength (normally distributed)
   Predictor variable -> sex
   
@@ -305,6 +306,7 @@ t.test(female.fl, male.fl)
 
 
 **3.Is there a difference between size of fish and tagging location?**
+  
   Response variable -> forklength of fish (normally distributed)
   Predictor variable -> site
  

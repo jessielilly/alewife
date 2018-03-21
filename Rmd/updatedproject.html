@@ -279,7 +279,8 @@ View(aw.df)</code></pre>
 </div>
 <div id="our-research-questions" class="section level1">
 <h1><strong>OUR RESEARCH QUESTIONS</strong></h1>
-<p><strong>1. Is there a relationship between forklength of fish and sex?</strong> Response variable -&gt; forklength (normally distributed) Predictor variable -&gt; sex</p>
+<p><strong>1. Is there a relationship between forklength of fish and sex?</strong></p>
+<p>Response variable -&gt; forklength (normally distributed) Predictor variable -&gt; sex</p>
 <p>Using a Welsh two-sample t-test -&gt; I know this isn’t the ideal test to perform, but it will determine if the two groups (male and female) have the same mean of forklength. If the t-test indicates that the mean is not the same, we can determine that the forklengths differ among sex</p>
 <p>Create two datasets from aw.df; one with just female forklenghs and the other with just male forklengths</p>
 <pre class="r"><code>newmodel.df &lt;- select(aw.df, fl, sex)
@@ -340,7 +341,8 @@ male.fl &lt;- male.df$male.fl</code></pre>
 ## sample estimates:
 ## mean of x mean of y 
 ##  240.7699  224.1850</code></pre>
-<p><strong>3.Is there a difference between size of fish and tagging location?</strong> Response variable -&gt; forklength of fish (normally distributed) Predictor variable -&gt; site</p>
+<p><strong>3.Is there a difference between size of fish and tagging location?</strong></p>
+<p>Response variable -&gt; forklength of fish (normally distributed) Predictor variable -&gt; site</p>
 <p>Creating a data frame with just the information I will need for the model (not necessary but easier for me to see)</p>
 <pre class="r"><code>aw.sites &lt;- select(aw.df, fl, site)</code></pre>
 <p>Test to see if ANOVA of this data frame works</p>
