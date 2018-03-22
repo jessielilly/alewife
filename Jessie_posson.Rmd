@@ -1,0 +1,123 @@
+---
+title: "Fisheries_class"
+author: "Jessie Lilly"
+date: "March 20, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Load tidyverse
+
+```{r}
+library(tidyverse)
+```
+
+## Create a data frame that just lists 
+
+```{r}
+data.frame(table(aw.df$h))
+aw.df.2 <- aw.df %>% group_by(h) %>%tally()
+```
+
+
+## Create a density plot comparing abundance of Alewife by the hour of the day. 
+
+```{r}
+ggplot(aw.df,aes(h))+
+  geom_density()+
+ xlab("Hour of day")+
+ggtitle("Amount of Alewife Captured Per Hour at Ahmerst and Missassguash Tidal Gates")
+```
+
+## Install Gam package
+
+```{r}
+install.packages("gam")
+install.packages("mgcv")
+```
+
+
+## Fit my data using a gam function instead of glm. 
+## There no longer appears to be a significant difference between hour and abundance of Alewife caught. 
+
+
+```{r}
+library(mgcv)
+pg1 <- gam(n ~ h,family = poisson, data = aw.df.2)
+
+summary(pg1)
+```
+
+## Plot the model
+
+```{r}
+library(tidyverse)
+plot(pg1)
+```
+
+## Read in Tide Data 
+## Change date and create an hour column. 
+
+```{r}
+library(readr)
+tidal_cycles <- read_csv("tidal_cycles.csv")
+View(tidal_cycles)
+
+```
+
+
+## Rename hour to h and Date_1 to enter
+
+```{r}
+names(tidal_cycles)[names(tidal_cycles) == "Hour"] <- "h"
+names(tidal_cycles)[names(tidal_cycles)=="Date_1"] <- "enter"
+
+
+```
+
+## Change enter in the tidal_cycles and aw.df to a date object. 
+
+```{r}
+library(tidyverse)
+names(tidal_cycles)
+sapply(tidal_cycles,class)
+
+sapply(aw.df,class)
+```
+
+## Change enter in tidal_cycles and aw.df to a character
+
+```{r}
+aw.df$enter <- as.character(aw.df$enter)
+tidal_cycles$enter <- as.character(tidal_cycles$enter)
+
+```
+
+
+## Left Join tidal_cycles by enter and h
+
+```{r}
+tide_aw <- aw.df %>% left_join(tidal_cycles, by = "h","enter")
+
+```
+
+## Left Join aw.df.2 (count data) to tide_aw
+
+```{r}
+tide_aw_count <- aw.df.2 %>% left_join(tide_aw,by="h")
+```
+
+
+
+## Fit a poission model that has tidal height as a covariate. 
+
+```{r}
+> pg2 <-gam(n~h +tide_aw_count$Height,family=poisson,data=aw.df.2)
+
+
+```
+
