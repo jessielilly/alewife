@@ -105,10 +105,13 @@ tide_aw <- aw.df %>% left_join(tidal_cycles, by = "h","enter")
 
 ```
 
-## Left Join aw.df.2 (count data) to tide_aw
+## Left Join aw.df.2 (count data) to the tidal heights 
 
 ```{r}
-tide_aw_count <- aw.df.2 %>% left_join(tide_aw,by="h")
+df.3 <- tide_aw %>% full_join(aw.df.2,by="h")
+```
+
+
 ```
 
 
@@ -116,7 +119,7 @@ tide_aw_count <- aw.df.2 %>% left_join(tide_aw,by="h")
 ## Fit a poission model that has tidal height as a covariate. 
 
 ```{r}
-> pg2 <-gam(n~h +tide_aw_count$Height,family=poisson,)
+ pg2 <-gam(n~h+ tide_aw_count$height,family=poisson,data=aw.df.2)
 
 
 ```
