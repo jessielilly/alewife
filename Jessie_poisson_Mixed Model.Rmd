@@ -48,7 +48,7 @@ temp_st <- filter(aw.df, site %in% target)
 ggplot(temp_st,aes(h))+
   geom_density(mapping=aes(color=site))+
  xlab("Hour of day")+
-ggtitle("Amount of Alewife Captured Per Hour at Ahmerst and Missassguash Tidal Gates")
+ggtitle("Amount of Alewife Captured Per Hour:Ahmerst and Missassguash Tidal Gates")
 ```
 
 
@@ -83,11 +83,52 @@ plot(pg1)
 
 ```{r}
 library(readr)
-tidal_cycles <- read_csv("tidal_cycles.csv")
+tidal_cycles <- read_csv("tidal_cycles.csv", 
+    col_types = cols(enter = col_date(format = "%m/%d/%Y")))
 View(tidal_cycles)
+
+
 
 ```
 
+
+
+
+## Seperate year month and day year into seperate columns in Tidal_cycles. 
+## Create a column with just month and day. 
+
+```{r}
+tidal_cycles<- cbind(tidal_cycles, day=day(tidal_cycles$enter), month=month(tidal_cycles$enter), year=year(tidal_cycles$enter))
+
+
+
+```
+
+## Create a column that just includes month and day in tidal_cycles2
+
+```{r}
+
+tidal_cycles2 <- tidal_cycles %>%
+  mutate(enter=make_date(!year,month,day))
+
+tidal_cycles3 <- tidal_cycles %>%
+  mutate(enter=make_date(!year,month,day,hour))
+
+```
+
+
+## Graph the height of the tide by the month and the day. 
+
+```{r}
+data_1_day <- tidal_cycles<- filter(tidal_cycles, enter=="2017-05-10")
+
+
+ggplot(data=data_1_day)+
+  geom_line(mapping=aes(x=h,y=Height))+
+  ylab("Height(m)")+
+  xlab("Hour")+
+  ggtitle("Change in Tidal Amplitude for May 10 2017")
+```
 
 ## Rename hour to h and Date_1 to enter
 
@@ -117,21 +158,19 @@ tidal_cycles$enter <- as.character(tidal_cycles$enter)
 ```
 
 
-## Left Join tidal_cycles by enter and h
+## Left Join tidal_cycles by enter and h to aw.df, and aw.df.2
 
 ```{r}
 tide_aw <- aw.df %>% left_join(tidal_cycles, by = "h","enter")
 
-```
 
-## Left Join aw.df.2 (count data) to the tidal heights 
-
-```{r}
-df.3 <- tide_aw %>% full_join(aw.df.2,by="h")
 ```
 
 
 ```
+
+
+
 
 
 
