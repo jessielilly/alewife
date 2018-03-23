@@ -31,7 +31,26 @@ ggplot(aw.df,aes(h))+
   geom_density()+
  xlab("Hour of day")+
 ggtitle("Amount of Alewife Captured Per Hour at Ahmerst and Missassguash Tidal Gates")
+
+
 ```
+## Create a density plot comparing the two fishways *Ahmerst= cbcl, and Missaguash= mstdg) 
+
+```{r}
+target <- c("cbcl","mstgd")
+temp_st <- filter(aw.df, site %in% target) 
+
+
+```
+
+
+```{r}
+ggplot(temp_st,aes(h))+
+  geom_density(mapping=aes(color=site))+
+ xlab("Hour of day")+
+ggtitle("Amount of Alewife Captured Per Hour at Ahmerst and Missassguash Tidal Gates")
+```
+
 
 ## Install Gam package
 
