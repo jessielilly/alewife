@@ -71,12 +71,7 @@ pg1 <- gam(n ~ h,family = poisson, data = aw.df.2)
 summary(pg1)
 ```
 
-## Plot the model
 
-```{r}
-library(tidyverse)
-plot(pg1)
-```
 
 ## Read in Tide Data 
 ## Change date and create an hour column. 
@@ -98,6 +93,7 @@ View(tidal_cycles)
 ## Create a column with just month and day. 
 
 ```{r}
+library(lubridate)
 tidal_cycles<- cbind(tidal_cycles, day=day(tidal_cycles$enter), month=month(tidal_cycles$enter), year=year(tidal_cycles$enter))
 
 
@@ -111,11 +107,36 @@ tidal_cycles<- cbind(tidal_cycles, day=day(tidal_cycles$enter), month=month(tida
 tidal_cycles2 <- tidal_cycles %>%
   mutate(enter=make_date(!year,month,day))
 
-tidal_cycles3 <- tidal_cycles %>%
-  mutate(enter=make_date(!year,month,day,hour))
 
 ```
 
+## Graph the height of the tidal cycles by May and then June create two seperate data files. 
+
+```{r}
+tide_may <- filter(tidal_cycles2,month==5)
+tide_june <- filter(tidal_cycles2,month==6)
+```
+
+
+```{r}
+ggplot(data=tide_may)+
+  geom_line(mapping=aes(x=h,y=Height))+
+  facet_wrap(~day)+
+  ylab("Height(m)")+
+  xlab("Hour")+
+  ggtitle("Change in Tidal Amplitude for May 2017")
+```
+
+## Graph the tidal amplitudes for every day in June. 
+
+```{r}
+ggplot(data=tide_june)+
+  geom_line(mapping=aes(x=h,y=Height))+
+  facet_wrap(~day)+
+  ylab("Height(m)")+
+  xlab("Hour")+
+  ggtitle("Change in Tidal Amplitude for June 2017")
+```
 
 ## Graph the height of the tide by the month and the day. 
 
@@ -130,54 +151,69 @@ ggplot(data=data_1_day)+
   ggtitle("Change in Tidal Amplitude for May 10 2017")
 ```
 
-## Rename hour to h and Date_1 to enter
+## Create a count of Alewife for each day by hour.
+## change the enter in tidal_cycles to a character vector. 
+## Sort it by the date(enter), left join aw.df.4 and tidal_cycles2 by hour and enter. 
 
 ```{r}
-names(tidal_cycles)[names(tidal_cycles) == "Hour"] <- "h"
-names(tidal_cycles)[names(tidal_cycles)=="Date_1"] <- "enter"
+data.frame(table(aw.df$h,aw.df$enter))
+aw.df.4 <- aw.df %>% group_by(h,enter) %>%tally()
+aw.df.4 %>% arrange(enter)
+
+
 
 
 ```
 
-## Change enter in the tidal_cycles and aw.df to a date object. 
+## Change enter in tidal_cycles to a character vector so I can left join aw.df.4
 
 ```{r}
-library(tidyverse)
-names(tidal_cycles)
-sapply(tidal_cycles,class)
+tidal_cycles2 <- tidal_cycles %>%
+  mutate(enter=make_date(!year,month,day))
 
-sapply(aw.df,class)
+tidal_cycles2$enter <- as.character(tidal_cycles2$enter)
 ```
 
-## Change enter in tidal_cycles and aw.df to a character
+## Create columns for day, month, year in aw.df.4
+## Change enter column to just month and day. 
 
 ```{r}
-aw.df$enter <- as.character(aw.df$enter)
-tidal_cycles$enter <- as.character(tidal_cycles$enter)
+aw.df.4<- cbind(aw.df.4, day=day(aw.df.4$enter), month=month(aw.df.4$enter), year=year(aw.df.4$enter))
 
-```
-
-
-## Left Join tidal_cycles by enter and h to aw.df, and aw.df.2
-
-```{r}
-tide_aw <- aw.df %>% left_join(tidal_cycles, by = "h","enter")
-
-
-```
+aw.df.4 <- aw.df.4 %>%
+  mutate(enter=make_date(!year,month,day))
 
 
 ```
 
 
 
-
-
-
-## Fit a poission model that has tidal height as a covariate. 
+## Left Join tidal_cycles by enter and h to aw.df.4
 
 ```{r}
- pg2 <-gam(n~h+ tide_aw_count$height,family=poisson,data=aw.df.2)
+tides_alewife <- aw.df.4 %>% left_join(tidal_cycles2, by = "h","enter")
+
+
+```
+
+
+## Graph alewife abundance per hour with tidal height. 
+
+```{r}
+
+```
+
+
+
+
+
+
+
+## Fit a poission model that has tidal height as a covariate. ## I am not sure how to do this. 
+
+```{r}
+ pg2 <-gam(n~h+Height,family=poisson,data=tides_alewife)
+summary(pg2)
 
 
 ```
