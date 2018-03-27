@@ -448,6 +448,12 @@ summary(lmm)
 This summary table shows that the y-intercept = 164.5 and the slope = 0.3685, making the equation:
 Y = 0.3685x + 164.5
 
+```{r}
+par(mfrow=c(2,2))
+plot(lmm)
+```
+
+
 Working with Female data, plot fork length vs. weight and fit a linear model
 ```{r}
 ggplot(aw.dff, aes(x = w, y = fl)) +
@@ -462,6 +468,12 @@ summary(lmf)
 ```
 This summary table shows that the y-intercept = 179.9 and the slope = 0.2912, making the equation:
 Y = 0.2912x + 179.9
+
+```{r}
+par(mfrow=c(2,2))
+plot(lmf)
+```
+
 
 Usually for fish, fork length vs. weight creates an exponential relationship because fork length increases in 2D and weight increases in 3D. Since this is the usual trend, I wanted to log transform the data (turns exponential data into linear data) and compare the linear models to see which is more accurate
 
@@ -483,6 +495,11 @@ summary(lmml)
 This summary table shows that the y-intercept = 4.208896 and the slope = 0.237258, making the equation:
 Y = 0.237258x + 4.208896
 
+```{r}
+par(mfrow=c(2,2))
+plot(lmml)
+```
+
 
 Females:
 ```{r}
@@ -501,6 +518,12 @@ summary(lmfl)
 ```
 This summary table shows that the y-intercept = 4.179992 and the slope = 0.24475, making the equation:
 Y = 0.24475x + 4.179992
+
+```{r}
+par(mfrow=c(2,2))
+plot(lmfl)
+```
+
 
 To recap, we have the data separated into males and females, and we have a total of 4 linear model equations:
 
