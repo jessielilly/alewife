@@ -341,6 +341,19 @@ Residual plots of this model
 par(mfrow = c(2, 2))
 plot(mod.site)
 ```
+```{r}
+mod.site2 <- lm(fl ~ site + sex + h, aw.df)
+```
+
+```{r}
+anova(mod.site2)
+```
+
+```{r}
+par(mfrow = c(2, 2))
+plot(mod.site2)
+```
+
 Model seems to fit pretty well, the values are evenly distributed around zero and Q-Q plot follows the line with a bit of spread at the top and bottom
 
 
